@@ -1,0 +1,28 @@
+#summary KVMADM Users and System Administrators Guide.
+
+= Purpose =
+
+= Hardware Requirements =
+
+= Software Requirements =
+
+== KVM Version ==
+
+== Other Utilities ==
+
+= Installation =
+
+== System-Wide Settings ==
+
+== Compilation from Sources ==
+
+= Virtual Machines Infrastructure =
+
+= Options that User Controls =
+
+= Usage Scenarios =
+
+= Sample Configuration =
+
+
+
