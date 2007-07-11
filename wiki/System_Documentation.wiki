@@ -106,12 +106,15 @@ Each VM subdirectory contains files and symbolic links that define options contr
 
 For security reasons, users are restricted in QEMU options that they can pass to launch virtual machines. These options are given below along with entries in VM subdirectory that control them.
 
+== Block Devices ==
 
+* fda - floppy disk image. Appearance of this file adds the `-fda fda` option to QEMU command line
+
+* hda - hard disk image. Appearance of this file adds the `-hda hda` option  to QEMU command line
 
 = Usage Scenarios =
 
 = Sample Configuration =
-
 
 
 
