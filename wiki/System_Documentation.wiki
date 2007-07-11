@@ -160,7 +160,7 @@ cd /usr/share/KVM
 mkdir `/usr/sbin/kvmid br0 . -m 196 -no-rtc -localtime`
 }}}
 
-  * Assign proper ownership and permissions to the VM subdirectory (the first line of `ls` output sorted by creation time descending, in one column, is the name of VM subdirectory just created):
+  * Assign proper ownership and permissions to the VM subdirectory (the first line of `ls` output sorted by creation time descending, in one column  - it is "1", not lowercase "ell"   in "-1tc"), is the name of VM subdirectory just created):
 
 {{{
 chown joe.users `ls -1tc | head -n 1`
@@ -176,7 +176,6 @@ ln -sf `ls -1tc | head -n 1` NewVM
 == User Tasks ==
 
 = Sample Configuration =
-
 
 
 
