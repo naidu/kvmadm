@@ -154,17 +154,28 @@ The following VM subdirectory entries may be either files or symbolic links: fda
 cd /usr/share/KVM
 }}}
 
-  * Identify name of the bridge interface the VM will be used with (e. g. br0). Define memory amount to allocate to the virtual machine. Define other options (e. g. -no-rtc, -localtime to use host computer's clock). Create a VM subdirectory:
+  * Identify name of the bridge interface the VM will be used with (e. g. br0). Define memory amount to allocate to the virtual machine. Define other options (e. g. -no-rtc, -localtime to use host computer's clock). Create a VM subdirectory (dot as the second argument to `kvmid` causes random MAC address for VM's NIC to be generated, otherwise specify the desired MAC address):
 
 {{{
 mkdir `/usr/sbin/kvmid br0 . -m 196 -no-rtc -localtime`
 }}}
 
+  * Assign proper ownership and permissions to the VM subdirectory (the first line of `ls` output sorted by creation time descending, in one column, is the name of VM subdirectory just created):
+
+{{{
+chown joe.users `ls -1tc | head -n 1`
+chmod 0700 `ls -1tc | head -n 1`
+}}}
+
+  * Create a symbolic link for the VM subdirectory which contains the user-visible name of the virtual machine:
+
+{{{
+ln -sf `ls -1tc | head -n 1` NewVM
+}}}
 
 == User Tasks ==
 
 = Sample Configuration =
-
 
 
 
