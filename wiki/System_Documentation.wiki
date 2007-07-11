@@ -175,8 +175,29 @@ ln -sf `ls -1tc | head -n 1` NewVM
 
 == User Tasks ==
 
-= Sample Configuration =
+=== Installation from a CD ROM Image ===
 
+  * Change to the VM subdirectory:
+
+{{{
+cd /usr/share/KVM/NewVM
+}}}
+
+  * Locate the CD ROM image to install from. Copy or symlink the image to the VM subdirectory:
+
+{{{
+cp /path/to/cd/rom/image cdrom
+# or
+ln -sf /path/to/cd/rom/image cdrom
+}}}
+
+  * Create the empty hda disk image (5 Gigabytes for example):
+
+{{{
+/path/to/qemu-img create -f qcow hda 5G 
+}}}
+
+= Sample Configuration =
 
 
 
