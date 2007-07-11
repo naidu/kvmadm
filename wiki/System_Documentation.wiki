@@ -108,28 +108,27 @@ For security reasons, users are restricted in QEMU options that they can pass to
 
 == Block Devices ==
 
-* fda - floppy disk image. Appearance of this file adds the `-fda fda` option to QEMU command line
+ * fda - floppy disk image. Appearance of this file adds the `-fda fda` option to QEMU command line
 
-* hda - hard disk image. Appearance of this file adds the `-hda hda` option  to QEMU command line
+ * hda - hard disk image. Appearance of this file adds the `-hda hda` option  to QEMU command line
 
-* hdb - hard disk image. Appearance of this file adds the `-hdb hdb` option  to QEMU command line
+ * hdb - hard disk image. Appearance of this file adds the `-hdb hdb` option  to QEMU command line
 
-* cdrom - CD ROM image. Appearance of this file adds the `-cdrom cdrom` option  to QEMU command line
+ * cdrom - CD ROM image. Appearance of this file adds the `-cdrom cdrom` option  to QEMU command line
 
 == Externally Loaded Linux Kernel ==
 
-* kernel - Linux kernel to load. Appearance of this file adds the `-kernel kernel` option to QEMU command line if boot mode is set to external Linux kernel (see below)
+ * kernel - Linux kernel to load. Appearance of this file adds the `-kernel kernel` option to QEMU command line if boot mode is set to external Linux kernel (see below)
 
-* append - file containing Linux kernel command line. Appearance of this file adds the `-append "xxxx"` option to QEMU command line where "xxxx" is contents of the `append` file if boot mode is set to external Linux kernel (see below)
+ * append - file containing Linux kernel command line. Appearance of this file adds the `-append "xxxx"` option to QEMU command line where "xxxx" is contents of the `append` file if boot mode is set to external Linux kernel (see below)
 
-* initrd - image of Linux kernel initialization RAM disk. Appearance of this file adds the `- inirtdr initrd` option to QEMU command line if boot mode is set to external Linux kernel (see below)
+ * initrd - image of Linux kernel initialization RAM disk. Appearance of this file adds the `- inirtdr initrd` option to QEMU command line if boot mode is set to external Linux kernel (see below)
 
 
 
 = Usage Scenarios =
 
 = Sample Configuration =
-
 
 
 
