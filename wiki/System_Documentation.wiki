@@ -144,8 +144,26 @@ The following VM subdirectory entries may be either files or symbolic links: fda
 
 = Usage Scenarios =
 
-= Sample Configuration =
+== Administrative Tasks (Performed under Root Privileges) ==
 
+=== Creation of a New Virtual Machine ===
+
+  * Change to the VM toplevel directory:
+
+{{{
+cd /usr/share/KVM
+}}}
+
+  * Identify name of the bridge interface the VM will be used with (e. g. br0). Define memory amount to allocate to the virtual machine. Define other options (e. g. -no-rtc, -localtime to use host computer's clock). Create a VM subdirectory:
+
+{{{
+mkdir `/usr/sbin/kvmid br0 . -m 196 -no-rtc -localtime`
+}}}
+
+
+== User Tasks ==
+
+= Sample Configuration =
 
 
 
