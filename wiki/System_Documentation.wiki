@@ -35,9 +35,11 @@ KERNEL=="kvm",           MODE="0660", GROUP="vm"
 
 The VM toplevel directory must be created as `/usr/share/KVM`. It should be owned by root.root and allow only read access for non-root users.
 
+Bridge(s) for connecting virtual machines to each other, and to the outside networks, must be created and configured.
+
 == Compilation from Sources ==
 
-*Kvmadm* ,,should,, be compiled from sources. No pre-built binary distribution is provided.
+*Kvmadm* _should_ be compiled from sources. No pre-built binary distribution is provided.
 
 1. Unpack the distribution tarball. Change to the toplevel distribution directory (`kvmadm- 0-17`).
 
@@ -53,7 +55,7 @@ Otherwise just run `./configure`.
 
 3. In the distribution toplevel directory, run `make`
 
-4. Installation of the binaries and scripts ,,should,, be performed under the root privileges:
+4. Installation of the binaries and scripts _should_ be performed under the root privileges:
 
 {{{
 su -c "make install"
@@ -92,7 +94,15 @@ lrwxrwxrwx 1 root root     71 2007-07-09 21:17 ArchDuke -> br0.FE:B9:29:12:42:19
 drwx------ 2 dima users  4096 2007-07-09 23:45 br0.FE:B9:29:12:42:19.Ii1tIiAiMTk2IiAiLW5vLXJ0YyIgIi1sb2NhbHRpbWUiIA==
 }}}
 
-= Options that User Controls =
+The example above shows a virtual machine named _ArchDuke_ whose NIC will be connected to the bridge named `br0`, will be assigned MAC address `FE:B9:29:12:42:19`, and QEMU will be passed options `-m 196 -no-rtc -localtime` in addition to user-defined options.
+
+Name of virtual machine will be used to name the tap device used to connect the VM to the bridge. The tap device will be named tap-ArchDuke for the example given. Therefore, length of VM name is limited: it should not exceed the value of `IFNAMSIZ - 5` where `IFNAMSIZ` is defined in the file `/usr/include/linux/if.h` as 16 (so, VM name should not be longer than 11 characters).
+
+Such naming of tap devices also prevents users from uncontrolled running multiple instances of virtual machines: more than one tap device with same name cannot be created.
+
+= Options that Users Control =
+
+
 
 = Usage Scenarios =
 
