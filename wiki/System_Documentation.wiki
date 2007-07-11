@@ -100,14 +100,17 @@ Name of virtual machine will be used to name the tap device used to connect the 
 
 Such naming of tap devices also prevents users from uncontrolled running multiple instances of virtual machines: more than one tap device with same name cannot be created.
 
+Each VM subdirectory contains files and symbolic links that define options controlled by users to be passed to QEMU to launch a virtual machine.
+
 = Options that Users Control =
+
+For security reasons, users are restricted in QEMU options that they can pass to launch virtual machines. These options are given below along with entries in VM subdirectory that control them.
 
 
 
 = Usage Scenarios =
 
 = Sample Configuration =
-
 
 
 
