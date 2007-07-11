@@ -124,12 +124,15 @@ For security reasons, users are restricted in QEMU options that they can pass to
 
  * initrd - image of Linux kernel initialization RAM disk. Appearance of this file adds the `- inirtdr initrd` option to QEMU command line if boot mode is set to external Linux kernel (see below)
 
+== Boot Mode ==
+
+ * boot - symbolic link that points to one of `fda`, `hda`, `cdrom`, `kernel`. It controls the `-boot` QEMU command line option which will be `a`, `c`, `d` in the first three cases, and in the fourth case `-boot`  will not be used, but `-kernel` will be used instead, as described above. If boot contains anything else, `-boot n` will be provided (network boot)
+
 
 
 = Usage Scenarios =
 
 = Sample Configuration =
-
 
 
 
