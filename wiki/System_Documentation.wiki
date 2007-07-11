@@ -138,10 +138,13 @@ For security reasons, users are restricted in QEMU options that they can pass to
 
   * no-acpi, no-reboot - files whose contents starts with either 'y' or 'n' (may be upper or lower case). Appearance of these files  adds `-no-acpi` and `-no-reboot` QEMU command line options with values depending on the first characters of those files
 
+  * rom - file containing a ROM image. Its appearance adds the `-option-rom rom` option to QEMU command line
+
+The following VM subdirectory entries may be either files or symbolic links: fda, hda, hdb, cdrom, kernel, initrd, rom. The following entries should be files: no-acpi, no-reboot, append, serial, nographic. the following entry should be a symbolic  link: boot.
+
 = Usage Scenarios =
 
 = Sample Configuration =
-
 
 
 
