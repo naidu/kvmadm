@@ -2,7 +2,7 @@
 
 = Purpose =
 
-The *kvmadm* project is aimed to provide a minimalistic set of tools to facilitate and control multi-user usage of [http://kvm.qumranet.com Kernel Virtual Machine]. The KVM uses QEMU code as frontend. Certain actions needed to start a KVM virtual machine require root privileges. This package provides a secure setuid wrapper which performs necessary actions in controlled manner, and then drops privileges to the user level. Instances of KVM themselves runs under privileges of users rather than those of root.
+The *kvmadm* project is aimed to provide a minimalistic set of tools to facilitate and control multi-user usage of [http://kvm.qumranet.com Kernel Virtual Machine]. The KVM uses QEMU code as frontend. Certain actions needed to start a KVM virtual machine require root privileges. This package provides a secure setuid wrapper which performs necessary actions in controlled manner, and then drops privileges to the user level. Instances of KVM themselves run under privileges of users rather than those of root.
 
 = Hardware Requirements =
 
@@ -197,7 +197,88 @@ ln -sf /path/to/cd/rom/image cdrom
 /path/to/qemu-img create -f qcow hda 5G 
 }}}
 
-= Sample Configuration =
+  * Specify boot mode from the CD ROM image:
 
+{{{
+ln -sf cdrom boot
+}}}
+
+  * Boot the VM from CD ROM and install the operating system on hda:
+
+{{{
+/usr/sbin/kvmrun NewVM
+}}}
+
+  * After the installation is complete, halt the VM, and remove the link to CD ROM image (unless it is needed for any purpose). Specify boot mode from the disk image:
+
+{{{
+rm cdrom
+ln -sf hda boot
+/usr/sbin/kvmrun NewVM
+}}}
+
+ * In this mode, graphic console window will appear, and all interaction with the virtual machine will be possible through this window.
+
+=== Redirecting VM Linux Console to Users Terminal ===
+
+In this scenario, we assume that some flavor of Linux is installed onto the virtual machine. We also assume that the Linux kernel that was built during the installation process was somehow extracted (along with the init RAM disk image) from the hda disk image.
+
+  * Change to the VM subdirectory:
+
+{{{
+cd /usr/share/KVM/NewVM
+}}}
+
+  * Locate the Linux kernel and init RAM disk files and copy or symlink them into the VM subdirectory under appropriate names:
+
+{{{
+ln -sf /path/to/linux/kernel kernel
+ln -sf /path/to/init/ramdisk initrd
+}}}
+
+  * Specify the boot mode from the external Linux kernel. Make sure that VM is still bootable (with the graphic console window). Setting the root disk device may be necessary; create the `append` file for this purpose:
+
+{{{
+ln -sf kernel boot
+echo -n "root=/dev/sda3" > append
+/usr/sbin/kvmrun NewVM
+}}}
+
+  * Log on as root into the virtual machine using the console window. Modify the /etc/inittab file to run `agetty` on the serial console (we assume that "xterm" is user's terminal type, but this may be anything else, e. g. rxvt ot linux):
+
+{{{
+cc:2345:respawn:/sbin/agetty 9600 ttyS0 xterm
+c1:2345:respawn:/sbin/agetty 38400 vc/1 linux
+c2:2345:respawn:/sbin/agetty 38400 vc/2 linux
+c3:2345:respawn:/sbin/agetty 38400 vc/3 linux
+c4:2345:respawn:/sbin/agetty 38400 vc/4 linux
+c5:2345:respawn:/sbin/agetty 38400 vc/5 linux
+c6:2345:respawn:/sbin/agetty 38400 vc/6 linux
+}}}
+
+  * Modify the /etc/securetty file to allow root login from the serial line:
+
+{{{
+ttyS0
+console
+vc/1
+vc/2
+vc/3
+vc/4
+vc/5
+}}}
+
+  * Halt the virtual machine. Specify redirection of the serial device to the users terminal, and instruct the Linux kernel to use serial line as console:
+
+{{{
+echo -n " console=ttyS0,9600" >> append
+echo -n "stdio" > serial
+echo > nographic
+/usr/sbin/kvmrun NewVM
+}}}
+
+Kernel boot messages will appear on users terminal. When the boot sequence is completed, login prompt will show up.
+
+= Sample Configuration =
 
 
