@@ -109,7 +109,9 @@ For security reasons, users are restricted in QEMU options that they can pass to
 
 == Block Devices ==
 
-  * fda - floppy disk image. Appearance of this file adds the `-fda fda` option to QEMU command line
+  * fda - floppy disk 0 image. Appearance of this file adds the `-fda fda` option to QEMU command line
+
+  * fdb - floppy disk 1 image. Appearance of this file adds the `-fdb fdb` option to QEMU command line
 
   * hda - hard disk image. Appearance of this file adds the `-hda hda` option  to QEMU command line
 
@@ -284,4 +286,23 @@ echo > nographic
 
 Kernel boot messages will appear on users terminal. When the boot sequence is completed, login prompt will show up.
 
+=== Passing Arbitrary Information to VM ===
+
+Sometimes it may be necessary to pass some ad-hoc information (not contained on VM's disk images, but determined right before the VM launch time) to a virtual machine being launched. Putting/changing files on VM's disk images is not feasible because they may be in the qcow format (not usable with loopback mount, not to mention that loopback usage is a privileged operation), or be formatted with a file system that the host computer does not recognize. Additionally, such deliberate modification of VM's images is dangerous of unintended file system corruption on disk images.
+
+Floppy disks however have few or no use for virtual machines, unless some floppy-based installation is performed. Anyway it is safe to assume that the Floppy 1 (`/dev/fd1` on the guest VM) is not used at all.
+
+Users may take advantage of this fact, and create the `fdb` file in the VM subdirectory, which contains the necessary information (and amount of such is only limited to the floppy disk image, usually 1.44M). This does not need to be an image of (V)FAT filesystem; any format is acceptable, but size of the `fdb` file should not be less that one sector (512 bytes) and should be multiple of 512.
+
+For example, user may pack some files from their home directory in a `cpio` archive and name the archive `fdb`. A practical example is the `.Xauthority` file containing authentication cookies necessary to run X Window applications on the virtual machine.
+
+So, prior to launching a virtual machine, user may execute this command:
+
+{{{
+(cd $HOME ; ls .Xauthority | cpio -i -C 512) >/usr/share/KVM/NewVM/fdb
+}}}
+
+The VM boot script should copy the `cpio` archive from `/dev/fd1` to the user's home directory on VM (so, name of the user must somehow be known to the VM, but it may be safely passed as one of kernel boot parameters, or otherwise within the same `cpio` archive via the floppy disk image). Further, user login script will extrac the `.Xauthority` file from the archive. It is assumed that the `.Xauthority` file contains X display host name that VM may use.
+
 = Sample Configuration =
+
