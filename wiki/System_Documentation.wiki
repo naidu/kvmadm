@@ -299,10 +299,9 @@ For example, user may pack some files from their home directory in a `cpio` arch
 So, prior to launching a virtual machine, user may execute this command:
 
 {{{
-(cd $HOME ; ls .Xauthority | cpio -i -C 512) >/usr/share/KVM/NewVM/fdb
+(cd $HOME ; ls .Xauthority | cpio -o -C 512) >/usr/share/KVM/NewVM/fdb
 }}}
 
 The VM boot script should copy the `cpio` archive from `/dev/fd1` to the user's home directory on VM (so, name of the user must somehow be known to the VM, but it may be safely passed as one of kernel boot parameters, or otherwise within the same `cpio` archive via the floppy disk image). Further, user login script will extrac the `.Xauthority` file from the archive. It is assumed that the `.Xauthority` file contains X display host name that VM may use.
 
 = Sample Configuration =
-
