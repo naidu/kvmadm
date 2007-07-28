@@ -320,6 +320,10 @@ In order to enable automatic start of user X11 applications in the virtual machi
 
   * Automatic start of user's X11 applications uses the `fdb` virtual floppy image in the VM subdirectory. Any existing `fdb` file will be overwritten by kvmadm scripts each time the virtual machine is launched.
 
+When a virtual machine is started (user types `/usr/sbin/kvmrun VMName` on the host computer), presence and contents of the two files is analyzed: `.VMUSERINFO` in user's home directory, and `userfiles` in the VM subdirectory. If the former file is present, it is filled with the following information:
+
+  * name of the user who launches the VM (result of `set | grep USER`)
+  * name and screen number of the X11 display which will be used by user's X11 applications on the VM (result of `set | grep DISPLAY`)
 
 
 = Sample Configuration =
