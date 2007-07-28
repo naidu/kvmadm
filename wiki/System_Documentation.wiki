@@ -320,10 +320,25 @@ In order to enable automatic start of user X11 applications in the virtual machi
 
   * Automatic start of user's X11 applications uses the `fdb` virtual floppy image in the VM subdirectory. Any existing `fdb` file will be overwritten by kvmadm scripts each time the virtual machine is launched.
 
-When a virtual machine is started (user types `/usr/sbin/kvmrun VMName` on the host computer), presence and contents of the two files is analyzed: `.VMUSERINFO` in user's home directory, and `userfiles` in the VM subdirectory. If the former file is present, it is filled with the following information:
+When a virtual machine is started (user types `/usr/sbin/kvmrun VMName` on the host computer), presence and contents of the two files is analyzed: `.VMUSERINFO` in user's home directory, and `userfiles` in the VM subdirectory. 
+
+If the former file is present, it is filled with the following information:
 
   * name of the user who launches the VM (result of `set | grep USER`)
   * name and screen number of the X11 display which will be used by user's X11 applications on the VM (result of `set | grep DISPLAY`)
+  * X server authentication information (result of `xauth nlist $DISPLAY`)
+
+If the latter file is present, all file paths it contains are tested for existence and being regular files (not directories). Non-esixting or non-accessible files are ignored.
+
+The name of the `.VMUSERINFO` file along with names contained in the `userfiles` file is fed to the standard input of the `cpio` utility which creates an archive. This archive is placed in the VM subdirectory as the `fdb` floppy disk image.
+
+When the VM boots, at some point the `autouser` script is executed. The script checks presence of the floppy 1 (`/dev/fd1`), and if present, tries to read the `.VMUSERINFO` file from the emulated floppy into the `/tmp` directory. If successful, user name is extracted from the file. User's home directory is checked for existence. If it exists, the whole cpio archive is copied there and all files extracted.
+
+Next, at the user's privileges, the login profile is executed, the `DISPLAY` variable is set accordingly in the user's environment, and X server authentication cookie is created.
+
+Finally, if the user's home directory on the virtual machine contains the `.vmsession` file, it is executed as a shell script. Otherwise the `xterm` program is started.
+
+The `vmsession` file may be copied from the host to the VM if its name is included in the `userfiles` file, but this does not happen automatically.
 
 
 = Sample Configuration =
