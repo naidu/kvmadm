@@ -338,7 +338,8 @@ Next, at the user's privileges, the login profile is executed, the `DISPLAY` var
 
 Finally, if the user's home directory on the virtual machine contains the `.vmsession` file, it is executed as a shell script. Otherwise the `xterm` program is started.
 
-The `vmsession` file may be copied from the host to the VM if its name is included in the `userfiles` file, but this does not happen automatically.
+The `.vmsession` file may be copied from the host to the VM if its name is included in the `userfiles` file, but this does not happen automatically.
 
+X window manager may run on either the host, or on VM; kvmadm does not enforce this.
 
 = Sample Configuration =
