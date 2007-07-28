@@ -304,4 +304,10 @@ So, prior to launching a virtual machine, user may execute this command:
 
 The VM boot script should copy the `cpio` archive from `/dev/fd1` to the user's home directory on VM (so, name of the user must somehow be known to the VM, but it may be safely passed as one of kernel boot parameters, or otherwise within the same `cpio` archive via the floppy disk image). Further, user login script will extrac the `.Xauthority` file from the archive. It is assumed that the `.Xauthority` file contains X display host name that VM may use.
 
+=== Automatic Start of X11 Applications in Virtual Machine ===
+
+One of possibilities kvmadm provides is to create "private" virtual machines that authorized user may start and use alone. Therefore the user who launches the virtual machine receives special treatment. Once the virtual machine boots, user's X11 session starts automatically (that is, a window manager, or a terminal emulator, or any other application starts without requirement for the user to log into the virtual machine started.
+
+
+
 = Sample Configuration =
