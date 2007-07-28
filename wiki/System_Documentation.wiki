@@ -308,6 +308,18 @@ The VM boot script should copy the `cpio` archive from `/dev/fd1` to the user's 
 
 One of possibilities kvmadm provides is to create "private" virtual machines that authorized user may start and use alone. Therefore the user who launches the virtual machine receives special treatment. Once the virtual machine boots, user's X11 session starts automatically (that is, a window manager, or a terminal emulator, or any other application starts without requirement for the user to log into the virtual machine started.
 
+In order to enable automatic start of user X11 applications in the virtual machine, the following needs to be done:
+
+  * The `autouser` script located in the `vmscripts` subdirectory of the source distribution should be copied onto the virtual machine's disk image and run at the very end of the VM boot process. This script accepts a parameter which should be "start" in order to automatically start user's applications. Suggested location for the script is `/etc/rc.d`, and the way to execute it depends on the VM operating system's boot scripts structure.
+
+  * User account with the same name as the user launching the virtual machine is known to the host, should be created on the virtual machine. Password does not need to be the same as on the host: indeed, it is not asked when starting user's X11 applications.
+
+  * The `userfiles` plain text file should be created in the VM subdirectory. The file may be empty, or contain a list of file paths relative to the user's home directory on the host computer, one path per line. This file is not modified by kvmadm scripts.
+
+  * The `.VMUSERINFO` file should be created in the user's home directory on the host computer. This file will be overwritten by kvmadm scripts each time the virtual machine is launched.
+
+  * Automatic start of user's X11 applications uses the `fdb` virtual floppy image in the VM subdirectory. Any existing `fdb` file will be overwritten by kvmadm scripts each time the virtual machine is launched.
+
 
 
 = Sample Configuration =
