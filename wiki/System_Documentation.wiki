@@ -340,6 +340,6 @@ Finally, if the user's home directory on the virtual machine contains the `.vmse
 
 The `.vmsession` file may be copied from the host to the VM if its name is included in the `userfiles` file, but this does not happen automatically.
 
-X window manager may run on either the host, or on VM; kvmadm does not enforce this. However if a `wm` file is present in the VM subdirectory (content does not matter, may be even empty), and the special patched version of evilwm (see EvilwmPatch) is running on the host computer, kvmadm will suspend evilwm right before launching the VM (thus making it possible to run a window manager on VM) and restart evilwm as soon as the KVM (qemu-system) executable terminates.
+X window manager may run on either the host, or on VM; kvmadm does not enforce this. However if a `wm` file is present in the VM subdirectory (content does not matter, may be even empty), and the special patched version of evilwm (see EvilvmPatch) is running on the host computer, kvmadm will suspend evilwm right before launching the VM (thus making it possible to run a window manager on VM) and restart evilwm as soon as the KVM (qemu-system) executable terminates.
 
 = Sample Configuration =
