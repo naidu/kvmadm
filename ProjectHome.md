@@ -1,0 +1,3 @@
+The Linux Kernel Virtual Machine (KVM) uses QEMU frotend to launch virtual machines. By default QEMU/KVM may only be started as root because of necessary manipulations with host network configuration. This project introduces a suid-root wrapper which being run by a regular user, performs all system-wide actions under root privileges, and then drops privileges to the level of the user who started it. Virtual machine thus runs under user's privileges, which makes it easier to enforce access and resource control using standard Linux system mechanisms.
+
+For any questions, comments, and concerns please contact the developer at golubovsky@gmail.com (Dmitry Golubosvky)
